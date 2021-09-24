@@ -7,7 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.List;
+import java.util.Collection;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
@@ -31,8 +31,8 @@ public class UmaFriendListScraping {
 	}
 
 	@SuppressWarnings("deprecation")
-	public String scraping(String representativeUmaName, List<String> blueFactors, List<String> redFactors,
-			int nextNum) throws InterruptedException {
+	public String scraping(String representativeUmaName, Collection<String> factors, int nextNum)
+			throws InterruptedException {
 		open(TOP_URL);
 		// NOTE 広告を消しておかないとボタンクリック時にelement click interceptedでこける
 		SelenideElement adCloseButton = $("#gCloseButton");
@@ -56,9 +56,7 @@ public class UmaFriendListScraping {
 		ElementsCollection checkBoxes = $$(shadowCss(".-r-uma-musume-friends-search-modal__label", SHADOW_ROOT));
 		for (SelenideElement checkBox : checkBoxes) {
 			String text = checkBox.getText();
-			if (blueFactors.contains(text)) {
-				checkBox.click();
-			} else if (redFactors.contains(text)) {
+			if (factors.contains(text)) {
 				checkBox.click();
 			}
 		}
@@ -94,9 +92,8 @@ public class UmaFriendListScraping {
 	public static void main(String[] args) throws Exception {
 		UmaFriendListScraping searcher = new UmaFriendListScraping();
 		String friendHtml = searcher.scraping(
-				"テイエムオペラオー",
-				Arrays.asList("スタミナ"),
-				Arrays.asList("長距離"),
+				"テイオー",
+				Arrays.asList("中距離"),
 				2);
 		System.out.println(friendHtml);
 		Path dest = Paths.get("friend.txt");

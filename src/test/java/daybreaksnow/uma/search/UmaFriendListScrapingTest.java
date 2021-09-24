@@ -17,7 +17,7 @@ public class UmaFriendListScrapingTest {
 
 	@Test
 	public void testScraping_条件なし() throws InterruptedException {
-		String resultHtml = scraping.scraping(null, Collections.emptyList(), Collections.emptyList(), 0);
+		String resultHtml = scraping.scraping(null, Collections.emptyList(), 0);
 		assertThat(resultHtml.contains("class=\"-r-uma-musume-friends__list\""), is(true));
 		assertThat(resultHtml.contains("class=\"-r-uma-musume-friends__results\""), is(true));
 		assertThat(resultHtml.contains("直近200件"), is(true));
@@ -25,7 +25,7 @@ public class UmaFriendListScrapingTest {
 
 	@Test
 	public void testScraping_もっと見る回数() throws InterruptedException {
-		String resultHtml = scraping.scraping(null, Collections.emptyList(), Collections.emptyList(), 2);
+		String resultHtml = scraping.scraping(null, Collections.emptyList(), 2);
 		assertThat(resultHtml.contains("class=\"-r-uma-musume-friends__list\""), is(true));
 		assertThat(resultHtml.contains("class=\"-r-uma-musume-friends__results\""), is(true));
 		assertThat(resultHtml.contains("直近600件"), is(true));
@@ -33,7 +33,7 @@ public class UmaFriendListScrapingTest {
 
 	@Test
 	public void testScraping_条件あり() throws InterruptedException {
-		String resultHtml = scraping.scraping("ライスシャワー", Arrays.asList("スタミナ"), Arrays.asList("長距離"), 0);
+		String resultHtml = scraping.scraping("ライスシャワー", Arrays.asList("スタミナ", "長距離"), 0);
 		assertThat(resultHtml.contains("class=\"-r-uma-musume-friends__list\""), is(true));
 		assertThat(resultHtml.contains("class=\"-r-uma-musume-friends__results\""), is(true));
 		assertThat(resultHtml.contains("直近200件"), is(true));
