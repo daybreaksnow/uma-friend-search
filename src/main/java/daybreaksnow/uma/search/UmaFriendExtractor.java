@@ -64,14 +64,14 @@ public class UmaFriendExtractor {
 				// 探したい因子があるか
 				// XXX すでにヒットした因子は除外したい
 				for (Factor factor : allNeedFactors) {
-					String pattern = String.format("%s.*[%d-9].*", factor.getName(), factor.getMinNum());
+					String pattern = String.format(".*%s.*[%d-9].*", factor.getName(), factor.getMinNum());
 					if (factorStr.matches(pattern)) {
 						allHitFactors.add(factor);
 						break;
 					}
 				}
 				for (Factor factor : representNeedFactors) {
-					String pattern = String.format("%s.*代表[%d-3].*", factor.getName(), factor.getMinNum());
+					String pattern = String.format(".*%s.*代表[%d-3].*", factor.getName(), factor.getMinNum());
 					if (factorStr.matches(pattern)) {
 						representHitFactors.add(factor);
 						break;
