@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -16,6 +18,10 @@ import org.jsoup.select.Elements;
  *
  */
 public class UmaFriendExtractor {
+
+	/** 代表が持っている因子の文字列パターン */
+	private static final Pattern REPRESENT_PATTERN = Pattern.compile("(.*)[1-9]\\(代表([1-3])\\)");
+
 	/**
 	 * @param friendHtml 解析対象のHTML
 	 * @param representNeedFactors 代表ウマ娘に必要な因子
@@ -78,8 +84,12 @@ public class UmaFriendExtractor {
 					}
 				}
 				if (factorStr.contains("代表")) {
-					// TODO ここの文字列は「スタミナ9(代表3)」のように不要な情報が含まれているので、「スタミナ3」のようにしたい
-					representFactors.add(factorStr);
+					// スタミナ9(代表3)」のような文字列を「スタミナ3」に変換
+					Matcher m = REPRESENT_PATTERN.matcher(factorStr);
+					m.find();
+					String factorName = m.group(1);
+					int factorNum = Integer.parseInt(m.group(2));
+					representFactors.add(factorName + factorNum);
 				}
 				allFactors.add(factorStr);
 			}
