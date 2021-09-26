@@ -83,10 +83,9 @@ public class UmaFriendExtractor {
 						break;
 					}
 				}
-				if (factorStr.contains("代表")) {
-					// スタミナ9(代表3)」のような文字列を「スタミナ3」に変換
-					Matcher m = REPRESENT_PATTERN.matcher(factorStr);
-					m.find();
+				// 代表因子の場合、「スタミナ9(代表3)」のような文字列を「スタミナ3」に変換
+				Matcher m = REPRESENT_PATTERN.matcher(factorStr);
+				if (m.find()) {
 					String factorName = m.group(1);
 					int factorNum = Integer.parseInt(m.group(2));
 					representFactors.add(factorName + factorNum);
